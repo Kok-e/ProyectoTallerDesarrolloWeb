@@ -46,6 +46,7 @@ function App() {
 
   return (
     <Box>
+      <img src="..\..\img\titulo.png" alt="" srcset="" />
        <Grid container spacing={2}>
         <Grid item xs={4}>
           {leftImages.map((leftImage, index) => (
