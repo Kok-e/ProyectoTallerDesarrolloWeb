@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, Box, Typography, Card, CardMedia, CardContent, Button } from '@mui/material';
 
+
 function App() {
   const [image, setImage] = useState(null);
   const [isAccepted, setIsAccepted] = useState(false);
   const [leftImages, setLeftImages] = useState([]);
   const [rightImages, setRightImages] = useState([]);
   const [dogName, setDogName] = useState('');
+  const [isDisabled, setIsDisabled] = useState(false);
+  
 
   const generateDogName = () => {
     const characters = 'abcdefghijklmnopqrstuvwxyz';
@@ -30,13 +33,26 @@ function App() {
     setIsAccepted(true);
     setRightImages(prevState => [{ name: dogName, image }, ...prevState]);
     fetchNewImage();
+    setIsDisabled(true);
+    console.log('Botón deshabilitado temporalmente');
+    setTimeout(() => {
+      setIsDisabled(false);
+      console.log('Botón habilitado');
+    }, 500);
   }
 
   const handleReject = () => {
     setIsAccepted(false);
     setLeftImages(prevState => [{ name: dogName, image }, ...prevState]);
     fetchNewImage();
+    setIsDisabled(true);
+    console.log('Botón deshabilitado temporalmente');
+    setTimeout(() => {
+      setIsDisabled(false);
+      console.log('Botón habilitado');
+    }, 500);
   }
+
 
 
 
@@ -45,8 +61,8 @@ function App() {
   }, []);
 
   return (
-    <Box>
-      <img src="..\..\img\titulo.png" alt="" />
+    <Box >
+      <img src="..\..\img\titulo.png" alt="" srcset="" />
        <Grid container spacing={2}>
         <Grid item xs={4}>
           {leftImages.map((leftImage, index) => (
@@ -75,12 +91,14 @@ function App() {
                 </CardContent>
               </Card>
               <Box sx={{ mt: 2 }}>
-                <Button variant="contained" color="success" onClick={handleAccept} sx={{ mr: 8 }}>
+                <Button disabled={isDisabled} variant="contained" color="success" onClick={handleAccept} sx={{ mr: 8 }}>
                   Aceptar
                 </Button>
-                <Button variant="contained" color="error" onClick={handleReject}>
+                {/* {text && <p>{text}</p>} */}
+                <Button disabled={isDisabled} variant="contained" color="error" onClick={handleReject} sx={{ mr: 8 }}>
                   Rechazar
                 </Button>
+                {/* {text && <p>{text}</p>} */}
               </Box>
             </Box>
           )}
