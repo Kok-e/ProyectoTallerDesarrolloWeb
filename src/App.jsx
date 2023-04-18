@@ -9,6 +9,8 @@ function App() {
   const [rightImages, setRightImages] = useState([]);
   const [dogName, setDogName] = useState('');
   const [isDisabled, setIsDisabled] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [prevDecision, setPrevDecision] = useState(null);
   
 
   const generateDogName = () => {
@@ -21,9 +23,13 @@ function App() {
   }
 
   const fetchNewImage = () => {
+    setIsDisabled(true);
+    setLoading(true);
     fetch('https://dog.ceo/api/breeds/image/random')
       .then(response => response.json())
       .then(data => {
+        setIsDisabled(false);
+        setLoading(false);
         setImage(data.message);
         setIsAccepted(false);
         setDogName(generateDogName());
@@ -33,24 +39,12 @@ function App() {
     setIsAccepted(true);
     setRightImages(prevState => [{ name: dogName, image }, ...prevState]);
     fetchNewImage();
-    setIsDisabled(true);
-    console.log('Botón deshabilitado temporalmente');
-    setTimeout(() => {
-      setIsDisabled(false);
-      console.log('Botón habilitado');
-    }, 500);
   }
 
   const handleReject = () => {
     setIsAccepted(false);
     setLeftImages(prevState => [{ name: dogName, image }, ...prevState]);
     fetchNewImage();
-    setIsDisabled(true);
-    console.log('Botón deshabilitado temporalmente');
-    setTimeout(() => {
-      setIsDisabled(false);
-      console.log('Botón habilitado');
-    }, 500);
   }
 
 
@@ -94,13 +88,18 @@ function App() {
                 <Button disabled={isDisabled} variant="contained" color="success" onClick={handleAccept} sx={{ mr: 8 }}>
                   Aceptar
                 </Button>
-                {/* {text && <p>{text}</p>} */}
+                {loading && <Typography>Cargando...</Typography>}
                 <Button disabled={isDisabled} variant="contained" color="error" onClick={handleReject} sx={{ mr: 8 }}>
                   Rechazar
                 </Button>
-                {/* {text && <p>{text}</p>} */}
+                {loading && <Typography>Cargando...</Typography>}
+              </Box>
+              <Box sx={{ mt: 2 }}>
+                <Button variant="contained" color="error" onClick={handleReject} sx={{ mr: 8 }}>
+                </Button>
               </Box>
             </Box>
+            
           )}
         </Grid>
         <Grid item xs={4}>
