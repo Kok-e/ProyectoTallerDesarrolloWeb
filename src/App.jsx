@@ -67,17 +67,20 @@ function App() {
   }, []);
 
   return (
-    <Box >
+    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '100vh' }} >
       <img src="..\..\img\titulo.png" alt="" srcset="" />
       <Grid container spacing={2}>
         <Grid item xs={4}>
           {leftImages.map((leftImage, index) => (
-            <Box key={`leftImage-${index}`} p={9} mb={0}>
-              <Card sx={{ maxWidth: 400 }}>
-                <CardMedia component="img" sx={{ maxWidth: '100%', height: 'auto' }} image={leftImage.image} alt="Perro" />
-                <CardContent>
-                  <Typography gutterBottom variant="h6" component="div">
+            <Box key={`leftImage-${index}`} p={2} mb={2}>
+              <Card sx={{ maxWidth: 400, borderRadius: 10, boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)' }}>
+                <CardMedia component="img" sx={{ maxWidth: '100%', height: 'auto', borderTopLeftRadius: 10, borderTopRightRadius: 10 }} image={leftImage.image} alt="Perro" />
+                <CardContent sx={{ backgroundColor: '#f7f7f7' }}>
+                  <Typography gutterBottom variant="h6" component="div" sx={{ fontWeight: 'bold', color: '#333' }}>
                     {leftImage.name}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary" sx={{ color: '#777' }}>
+                    {leftImage.description}
                   </Typography>
                 </CardContent>
               </Card>
@@ -87,38 +90,40 @@ function App() {
         <Grid item xs={4}>
           {image && (
             <Box p={2}>
-              <Card sx={{ maxWidth: 345 }}>
-                <CardMedia component="img" image={image} alt="Perro" sx={{ maxWidth: '100%', height: 'auto' }} />
+              <Card sx={{ maxWidth: 345, borderRadius: '10px', boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)' }}>
+                <CardMedia component="img" image={image} alt="Imagen de un perro" sx={{ maxWidth: '100%', height: 'auto', borderRadius: '10px 10px 0 0' }} />
                 <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
+                  <Typography gutterBottom variant="h5" component="div" sx={{ color: '#333', fontWeight: 'bold', mb: 1 }}>
                     {dogName}
                   </Typography>
+                  <Typography variant="body1" component="p" sx={{ color: '#555', mb: 2 }}>
+                    ¡Hola! Soy {dogName}. Me encanta jugar y correr. ¿Quieres salir a ladrar?
+                  </Typography>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <Button disabled={isDisabled} variant="contained" color="success" onClick={handleAccept} sx={{ borderRadius: '20px', textTransform: 'none' }}>
+                      Aceptar
+                    </Button>
+                    {loading && <Typography>Cargando...</Typography>}
+                    <Button disabled={isDisabled} variant="contained" color="error" onClick={handleReject} sx={{ borderRadius: '20px', textTransform: 'none' }}>
+                      Rechazar
+                    </Button>
+                    {loading && <Typography>Cargando...</Typography>}
+                    <Button disabled={!prevDecision} variant="contained" onClick={handleUndo} sx={{ borderRadius: '20px', textTransform: 'none' }}>
+                      Deshacer
+                    </Button>
+                  </Box>
                 </CardContent>
               </Card>
-              <Box sx={{ mt: 2 }}>
-                <Button disabled={isDisabled} variant="contained" color="success" onClick={handleAccept} sx={{ mr: 8 }}>
-                  Aceptar
-                </Button>
-                {loading && <Typography>Cargando...</Typography>}
-                <Button disabled={isDisabled} variant="contained" color="error" onClick={handleReject} sx={{ mr: 8 }}>
-                  Rechazar
-                </Button>
-                {loading && <Typography>Cargando...</Typography>}
-                <Button disabled={!prevDecision} variant="contained" onClick={handleUndo}>
-                  Deshacer
-                </Button>
-              </Box>
             </Box>
-
           )}
         </Grid>
         <Grid item xs={4}>
           {rightImages.map((rightImage, index) => (
             <Box key={`rightImage-${index}`} p={9} mb={0}>
-              <Card sx={{ maxWidth: 345 }}>
-                <CardMedia component="img" sx={{ maxWidth: '100%', height: 'auto' }} image={rightImage.image} alt="Perro" />
+              <Card sx={{ maxWidth: 345, borderRadius: '20px', boxShadow: '0 8px 40px -12px rgba(0,0,0,0.3)', transition: 'transform 0.3s ease-in-out', '&:hover': { transform: 'scale(1.05)' } }}>
+                <CardMedia component="img" sx={{ maxWidth: '100%', height: 'auto', borderRadius: '20px 20px 0 0' }} image={rightImage.image} alt="Perro" />
                 <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
+                  <Typography gutterBottom variant="h5" component="div" sx={{ fontWeight: 'bold' }}>
                     {rightImage.name}
                   </Typography>
                 </CardContent>
