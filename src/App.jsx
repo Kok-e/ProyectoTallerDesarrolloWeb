@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, Box, Typography, Card, CardMedia, CardContent, Button } from '@mui/material';
+import { Grid, Box, Typography, Card, CardMedia, CardContent, Button, Badge } from '@mui/material';
 
 
 function App() {
@@ -72,8 +72,8 @@ function App() {
       <Grid container spacing={2}>
         <Grid item xs={4}>
           {leftImages.map((leftImage, index) => (
-            <Box key={`leftImage-${index}`} p={2} mb={2}>
-              <Card sx={{ maxWidth: 400, borderRadius: 10, boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)' }}>
+            <Box key={`leftImage-${index}`} p={9} mb={0} sx={{ position: 'relative' }}>
+              <Card sx={{ maxWidth: 400, borderRadius: 10, boxShadow: '0 8px 40px -12px rgba(0,0,0,0.3)', transition: 'transform 0.3s ease-in-out', '&:hover': { transform: 'scale(1.05)' } }}>
                 <CardMedia component="img" sx={{ maxWidth: '100%', height: 'auto', borderTopLeftRadius: 10, borderTopRightRadius: 10 }} image={leftImage.image} alt="Perro" />
                 <CardContent sx={{ backgroundColor: '#f7f7f7' }}>
                   <Typography gutterBottom variant="h6" component="div" sx={{ fontWeight: 'bold', color: '#333' }}>
@@ -84,6 +84,9 @@ function App() {
                   </Typography>
                 </CardContent>
               </Card>
+              <Box sx={{ position: 'absolute', top: 0, right: 0, backgroundColor: 'red', color: 'white', borderRadius: '0 0 0 20px', padding: '4px 8px', fontWeight: 'bold', fontSize: '12px' }}>
+                Rechazado
+              </Box>
             </Box>
           ))}
         </Grid>
@@ -119,7 +122,7 @@ function App() {
         </Grid>
         <Grid item xs={4}>
           {rightImages.map((rightImage, index) => (
-            <Box key={`rightImage-${index}`} p={9} mb={0}>
+            <Box key={`rightImage-${index}`} p={9} mb={0} sx={{ position: 'relative' }}>
               <Card sx={{ maxWidth: 345, borderRadius: '20px', boxShadow: '0 8px 40px -12px rgba(0,0,0,0.3)', transition: 'transform 0.3s ease-in-out', '&:hover': { transform: 'scale(1.05)' } }}>
                 <CardMedia component="img" sx={{ maxWidth: '100%', height: 'auto', borderRadius: '20px 20px 0 0' }} image={rightImage.image} alt="Perro" />
                 <CardContent>
@@ -128,6 +131,9 @@ function App() {
                   </Typography>
                 </CardContent>
               </Card>
+              <Box sx={{ position: 'absolute', top: 0, right: 0, backgroundColor: 'green', color: 'white', borderRadius: '0 0 0 20px', padding: '4px 8px', fontWeight: 'bold', fontSize: '12px' }}>
+                Aceptado
+              </Box>
             </Box>
           ))}
         </Grid>
