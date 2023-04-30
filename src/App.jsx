@@ -14,6 +14,7 @@ import Toolbar from '@mui/material/Toolbar';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { CenterFocusStrong } from '@mui/icons-material';
+import { red } from '@mui/material/colors';
 
 
 
@@ -97,7 +98,7 @@ function App() {
       <Grid
         item xs={12}
         p={5}
-         >
+      >
         <AppBar
           className="appbar"
           color="transparent"
@@ -114,17 +115,17 @@ function App() {
               sx={{ flexGrow: 1 }}>
               <b><big> &nbsp; TinDogs</big></b>
             </Typography>
-            <IconButton
-              disabled={isDisabled}
-              sx={{ borderRadius: '50%', color: 'white', width: 64, height: 64 }}>
-              <HomeIcon sx={{ fontSize: 32 }} />
-            </IconButton>
+            <Avatar
+                alt="Remy Sharp"
+                src="/img/dog.gif"
+                sx={{ width: 70, height: 70 }}
+              />
           </Toolbar>
         </AppBar>
       </Grid>
       <Grid
         item xs={12} xl={4}
-        
+
         sx={{ maxHeight: '800px' }} >
         {image && (
           <Box
@@ -134,7 +135,7 @@ function App() {
                 component="img"
                 image={image}
                 alt="Imagen de un perro"
-                sx={{ pl: 10, pt:3 , height: 400, width: 450,  objectFit: 'cover' }} />
+                sx={{ pl: 10, pt: 3, height: 400, width: 450, objectFit: 'cover' }} />
               <CardContent>
                 <Typography
                   gutterBottom
@@ -184,7 +185,7 @@ function App() {
       </Grid>
       <Grid
         item xl={4} xs={6}
-        
+
         sx={{ overflowY: 'scroll', maxHeight: 800 }}>
         {rightImages.map((rightImage, index) => (
           <Box
@@ -207,7 +208,7 @@ function App() {
                   {rightImage.name}
                 </Typography>
                 <IconButton onClick={handleButtonClick}>
-                  {isVisible ?  <Tooltip title="Descripcion desplegada"><VisibilityIcon /></Tooltip>: <Tooltip title="Descripcion oculta"><VisibilityOffIcon /></Tooltip>}
+                  {isVisible ? <Tooltip title="Descripcion desplegada"><VisibilityIcon /></Tooltip> : <Tooltip title="Descripcion oculta"><VisibilityOffIcon /></Tooltip>}
                 </IconButton>
                 <Collapse in={showText}>
                   {text}
@@ -222,7 +223,7 @@ function App() {
       </Grid>
       <Grid
         item xl={4} xs={6}
-        
+
         sx={{ overflowY: 'scroll', maxHeight: 800 }}>
         {leftImages.map((leftImage, index) => (
           <Box
@@ -244,7 +245,7 @@ function App() {
                   {leftImage.name}
                 </Typography>
                 <IconButton onClick={handleButtonClick}>
-                {isVisible ?  <Tooltip title="Descripcion desplegada"><VisibilityIcon /></Tooltip>: <Tooltip title="Descripcion oculta"><VisibilityOffIcon /></Tooltip>}
+                  {isVisible ? <Tooltip title="Descripcion desplegada"><VisibilityIcon /></Tooltip> : <Tooltip title="Descripcion oculta"><VisibilityOffIcon /></Tooltip>}
 
                 </IconButton>
                 <Collapse in={showText}>
