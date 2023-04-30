@@ -207,7 +207,7 @@ function App() {
                   {rightImage.name}
                 </Typography>
                 <IconButton onClick={handleButtonClick}>
-                  {isVisible ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                  {isVisible ?  <Tooltip title="Descripcion desplegada"><VisibilityIcon /></Tooltip>: <Tooltip title="Descripcion oculta"><VisibilityOffIcon /></Tooltip>}
                 </IconButton>
                 <Collapse in={showText}>
                   {text}
@@ -244,7 +244,8 @@ function App() {
                   {leftImage.name}
                 </Typography>
                 <IconButton onClick={handleButtonClick}>
-                  {isVisible ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                {isVisible ?  <Tooltip title="Descripcion desplegada"><VisibilityIcon /></Tooltip>: <Tooltip title="Descripcion oculta"><VisibilityOffIcon /></Tooltip>}
+
                 </IconButton>
                 <Collapse in={showText}>
                   {text}
