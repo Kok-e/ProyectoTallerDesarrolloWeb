@@ -1,4 +1,3 @@
-import { useQuery } from 'react-query'
 import React, { useState, useEffect } from 'react';
 import { Grid, Box, Typography, Card, CardMedia, CardContent, Button, Badge, LinearProgress } from '@mui/material';
 import { IconButton, Tooltip } from '@mui/material';
@@ -8,13 +7,13 @@ import { Collapse } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import BlockIcon from '@mui/icons-material/Block';
 import UndoIcon from '@mui/icons-material/Undo';
-import HomeIcon from '@mui/icons-material/Home';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import { CenterFocusStrong } from '@mui/icons-material';
-import { red } from '@mui/material/colors';
+import './App.css';
+
+
 
 
 
@@ -105,6 +104,7 @@ function App() {
           position="fixed">
           <Toolbar >
             <Avatar
+              className='logo'
               alt="Remy Sharp"
               src="/img/titulo.png"
               sx={{ width: 56, height: 56 }}
@@ -116,10 +116,11 @@ function App() {
               <b><big> &nbsp; TinDogs</big></b>
             </Typography>
             <Avatar
-                alt="Remy Sharp"
-                src="/img/dog.gif"
-                sx={{ width: 70, height: 70 }}
-              />
+              className='gif'
+              alt="Remy Sharp"
+              src="/img/dog.gif"
+              sx={{ width: 70, height: 70 }}
+            />
           </Toolbar>
         </AppBar>
       </Grid>
@@ -130,8 +131,10 @@ function App() {
         {image && (
           <Box
             p={2}>
-            <Card sx={{ maxWidth: '100%', maxHeight: '100%', borderRadius: '10px', boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)' }}>
+            <Card className="card" sx={{ maxWidth: '100%', maxHeight: '100%', borderRadius: '10px', boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)' }}>
               <CardMedia
+              item
+                className='imagen'
                 component="img"
                 image={image}
                 alt="Imagen de un perro"
@@ -178,7 +181,7 @@ function App() {
                   </Tooltip>
                 </Box>
               </CardContent>
-              {isLoading && <LinearProgress />}
+              {isLoading && <LinearProgress className='barraCarga' />}
             </Card>
           </Box>
         )}
@@ -194,8 +197,10 @@ function App() {
             mb={0}
             sx={{ position: 'relative' }}>
             <Card
+              className="card"
               sx={{ maxWidth: 345, borderRadius: '20px', boxShadow: '0 8px 40px -12px rgba(0,0,0,0.3)', transition: 'transform 0.3s ease-in-out', '&:hover': { transform: 'scale(1.05)' } }}>
               <CardMedia
+                className='imagen'
                 component="img"
                 sx={{ maxWidth: '100%', height: 'auto', borderRadius: '20px 20px 0 0' }}
                 image={rightImage.image} alt="Perro" />
@@ -232,8 +237,10 @@ function App() {
             mb={0}
             sx={{ position: 'relative' }}>
             <Card
+              className="card"
               sx={{ maxWidth: 345, borderRadius: '20px', boxShadow: '0 8px 40px -12px rgba(0,0,0,0.3)', transition: 'transform 0.3s ease-in-out', '&:hover': { transform: 'scale(1.05)' } }}>
               <CardMedia
+                className='imagen'
                 component="img"
                 sx={{ maxWidth: '100%', height: 'auto', borderTopLeftRadius: 10, borderTopRightRadius: 10 }} image={leftImage.image} alt="Perro" />
               <CardContent sx={{ backgroundColor: '#f7f7f7' }}>
