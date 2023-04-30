@@ -134,7 +134,7 @@ function App() {
                 component="img"
                 image={image}
                 alt="Imagen de un perro"
-                sx={{ pl: 10 , height: 400, width: 450, borderRadius: '40px 40px 40px 40px ', objectFit: 'cover' }} />
+                sx={{ pl: 10, pt:3 , height: 400, width: 450,  objectFit: 'cover' }} />
               <CardContent>
                 <Typography
                   gutterBottom
