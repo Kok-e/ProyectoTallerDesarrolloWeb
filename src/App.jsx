@@ -4,6 +4,7 @@ import { IconButton, Tooltip } from '@mui/material';
 import { LoremIpsum } from 'lorem-ipsum';
 import { Avatar } from '@mui/material';
 import { Collapse } from '@mui/material';
+import { useQuery } from 'react-query';
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import BlockIcon from '@mui/icons-material/Block';
 import UndoIcon from '@mui/icons-material/Undo';
@@ -12,11 +13,6 @@ import Toolbar from '@mui/material/Toolbar';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import './App.css';
-
-
-
-
-
 
 function App() {
   const [image, setImage] = useState(null);
@@ -29,6 +25,7 @@ function App() {
   const [prevDecision, setPrevDecision] = useState(null);
   const [showText, setShowText] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [dogDescription, setDogDescription] = useState('');
 
   const fetchDogName = async () => {
     const response = await fetch("https://nombre-de-perros-default-rtdb.firebaseio.com/perros/.json");
@@ -42,8 +39,6 @@ function App() {
     return lorem.generateParagraphs(count);
   };
 
-  const text = generateText(1);
-
   const fetchNewImage = () => {
     setIsDisabled(true);
     setIsLoading(true);
@@ -55,19 +50,20 @@ function App() {
         setImage(data.message);
         setIsAccepted(false);
         setDogName(await fetchDogName());
+        setDogDescription(generateText(1));
       });
   };
 
   const handleAccept = () => {
     setIsAccepted(true);
-    setRightImages(prevState => [{ name: dogName, image }, ...prevState]);
+    setRightImages(prevState => [{ name: dogName, image, description: dogDescription }, ...prevState]);
     setPrevDecision('accept');
     fetchNewImage();
   }
 
   const handleReject = () => {
     setIsAccepted(false);
-    setLeftImages(prevState => [{ name: dogName, image }, ...prevState]);
+    setLeftImages(prevState => [{ name: dogName, image, description: dogDescription }, ...prevState]);
     setPrevDecision('reject');
     fetchNewImage();
   }
@@ -75,10 +71,10 @@ function App() {
   const handleUndo = () => {
     if (prevDecision === 'accept') {
       setRightImages(prevState => prevState.slice(1));
-      setLeftImages(prevState => [{ name: rightImages[0].name, image: rightImages[0].image }, ...prevState]);
+      setLeftImages(prevState => [{ name: rightImages[0].name, image: rightImages[0].image, description: rightImages[0].description }, ...prevState]);
     } else if (prevDecision === 'reject') {
       setLeftImages(prevState => prevState.slice(1));
-      setRightImages(prevState => [{ name: leftImages[0].name, image: leftImages[0].image }, ...prevState]);
+      setRightImages(prevState => [{ name: leftImages[0].name, image: leftImages[0].image, description: leftImages[0].description }, ...prevState]);
     }
     setPrevDecision(null);
   }
@@ -92,10 +88,12 @@ function App() {
     setShowText(!showText);
   }
 
+  
   return (
     <Grid container spacing={2} >
       <Grid
-        item xs={12}
+        item={true}
+        xs={12}
         p={5}
       >
         <AppBar
@@ -125,15 +123,15 @@ function App() {
         </AppBar>
       </Grid>
       <Grid
-        item xs={12} xl={4}
-
+        item={true}
+        xs={12} xl={4}
         sx={{ maxHeight: '800px' }} >
         {image && (
           <Box
             p={2}>
             <Card className="card" sx={{ maxWidth: '100%', maxHeight: '100%', borderRadius: '10px', boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)' }}>
               <CardMedia
-              item
+                item="true"
                 className='imagen'
                 component="img"
                 image={image}
@@ -151,26 +149,32 @@ function App() {
                   variant="body1"
                   component="p"
                   sx={{ color: '#555', mb: 2 }}>
-                  ¡Hola! Soy {dogName}. {text}
+                  ¡Hola! Soy {dogName}. {dogDescription}
                 </Typography>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                   <Tooltip title="Aceptar">
-                    <IconButton
+                    <span>
+                      <IconButton
                       disabled={isDisabled}
                       onClick={handleAccept}
                       sx={{ borderRadius: '50%', color: '#2189f7', width: 64, height: 64 }}>
                       <FavoriteIcon sx={{ fontSize: 32 }} />
                     </IconButton>
+                    </span>
                   </Tooltip>
                   <Tooltip title="Rechazar">
+                    <span>
+                      
                     <IconButton
                       disabled={isDisabled}
                       onClick={handleReject}
                       sx={{ borderRadius: '20px', color: 'red', width: 64, height: 64 }}>
                       <BlockIcon />
                     </IconButton>
+                    </span>
                   </Tooltip>
                   <Tooltip title="Deshacer">
+                    <span>
                     <IconButton
                       disabled={!prevDecision}
                       variant="contained"
@@ -178,6 +182,7 @@ function App() {
                       sx={{ borderRadius: '20px', color: 'green', width: 64, height: 64 }}>
                       <UndoIcon />
                     </IconButton>
+                    </span>
                   </Tooltip>
                 </Box>
               </CardContent>
@@ -187,8 +192,9 @@ function App() {
         )}
       </Grid>
       <Grid
-        item xl={4} xs={6}
-
+        item={true}
+        xl={4}
+        xs={6}
         sx={{ overflowY: 'scroll', maxHeight: 800 }}>
         {rightImages.map((rightImage, index) => (
           <Box
@@ -216,7 +222,12 @@ function App() {
                   {isVisible ? <Tooltip title="Descripcion desplegada"><VisibilityIcon /></Tooltip> : <Tooltip title="Descripcion oculta"><VisibilityOffIcon /></Tooltip>}
                 </IconButton>
                 <Collapse in={showText}>
-                  {text}
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ color: '#777' }}>
+                  {rightImage.description}
+                </Typography>
                 </Collapse>
               </CardContent>
             </Card>
@@ -227,8 +238,9 @@ function App() {
         ))}
       </Grid>
       <Grid
-        item xl={4} xs={6}
-
+       item={true}
+        xl={4} 
+        xs={6}
         sx={{ overflowY: 'scroll', maxHeight: 800 }}>
         {leftImages.map((leftImage, index) => (
           <Box
@@ -253,17 +265,15 @@ function App() {
                 </Typography>
                 <IconButton onClick={handleButtonClick}>
                   {isVisible ? <Tooltip title="Descripcion desplegada"><VisibilityIcon /></Tooltip> : <Tooltip title="Descripcion oculta"><VisibilityOffIcon /></Tooltip>}
-
                 </IconButton>
                 <Collapse in={showText}>
-                  {text}
-                </Collapse>
                 <Typography
                   variant="body2"
                   color="text.secondary"
                   sx={{ color: '#777' }}>
                   {leftImage.description}
                 </Typography>
+                </Collapse>
               </CardContent>
             </Card>
             <Box sx={{ position: 'absolute', top: 0, right: 0, backgroundColor: 'red', color: 'white', borderRadius: '0 0 0 20px', padding: '4px 8px', fontWeight: 'bold', fontSize: '12px' }}>
@@ -273,8 +283,6 @@ function App() {
         ))}
       </Grid>
     </Grid>
-
-
   );
 }
 
