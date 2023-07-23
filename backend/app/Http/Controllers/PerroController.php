@@ -55,4 +55,20 @@ class PerroController extends Controller
         PerroModel::destroy($id);
         return redirect()->route('perros.index')->with('success', 'Perro eliminado exitosamente.');
     }
+    // Mostrar las interacciones de un perro específico
+public function showInteracciones($id)
+{
+    $perro = PerroModel::find($id);
+    $interacciones = $perro->interacciones;
+    return view('perros.interacciones', compact('perro', 'interacciones'));
+}
+
+// Almacenar una nueva interacción en la base de datos
+public function storeInteraccion(Request $request)
+{
+    $interaccion = InteraccionModel::create($request->all());
+    return redirect()->route('perros.show', $request->perro_interesado_id)
+                     ->with('success', 'Interacción creada exitosamente.');
+}
+
 }
