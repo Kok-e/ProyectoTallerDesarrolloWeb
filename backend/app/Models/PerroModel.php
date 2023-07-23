@@ -9,11 +9,15 @@ class PerroModel extends Model
 {
     use HasFactory;
 
-    protected $table = 'perros'; // Nombre de la tabla en la base de datos (si es diferente a "perro_models")
+    protected $table = 'perrosDB'; // Nombre de la tabla en la base de datos (si es diferente a "perro_models")
     protected $primaryKey = 'id'; // Nombre de la clave primaria (si es diferente a "id")
-    public $timestamps = false; // Desactivar las columnas created_at y updated_at
+    public $timestamps = true; // Desactivar las columnas created_at y updated_at
 
-    protected $fillable = ['nombre', 'url_foto', 'descripcion']; // Lista de atributos asignables
+    protected $fillable = [
+        "nombre",
+        "url_foto",
+        "descripcion"
+    ]; // Lista de atributos asignables
 
     
 }
