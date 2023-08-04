@@ -4,7 +4,6 @@ import { IconButton, Tooltip } from '@mui/material';
 import { LoremIpsum } from 'lorem-ipsum';
 import { Avatar } from '@mui/material';
 import { Collapse } from '@mui/material';
-import { useQuery } from 'react-query';
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import BlockIcon from '@mui/icons-material/Block';
 import UndoIcon from '@mui/icons-material/Undo';
@@ -12,6 +11,10 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import RegistroPerroForm from './RegistroPerroForm';
+import AppRoutes from './routes';
+
 import './App.css';
 
 function App() {
@@ -90,13 +93,15 @@ function App() {
 
   
   return (
-    <Grid container spacing={2} >
+<Router>
+<AppRoutes />
+<Grid container spacing={2} >
       <Grid
         item={true}
         xs={12}
         p={5}
       >
-        <AppBar
+<AppBar
           className="appbar"
           color="transparent"
           position="fixed">
@@ -113,6 +118,8 @@ function App() {
               sx={{ flexGrow: 1 }}>
               <b><big> &nbsp; TinDogs</big></b>
             </Typography>
+            <Button variant="contained" href="/"> Inicio </Button>
+            <Button variant="contained" href="/registro"> Registro </Button>
             <Avatar
               className='gif'
               alt="Remy Sharp"
@@ -126,6 +133,7 @@ function App() {
         item={true}
         xs={12} xl={4}
         sx={{ maxHeight: '800px' }} >
+
         {image && (
           <Box
             p={2}>
@@ -283,6 +291,7 @@ function App() {
         ))}
       </Grid>
     </Grid>
+</Router>
   );
 }
 
